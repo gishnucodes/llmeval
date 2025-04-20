@@ -1,0 +1,1254 @@
+; LIF = "LLM Interchange Format" after AIF by KWR and Tamal Biswas
+;
+; Required elements: LLM tokens must be followed by colon :
+; [PromptID "..."]    Not the prompt itself, but an ID by which to group data items
+; [PromptText "..."]  The actual text of the initial fixed part of the prompt, given just once.
+; [EngineID "..."]  Model name.  Enables writing model-specific numerics later on.
+; [MultiPV "###"]  filled by the max number of words with scores given by the model
+; [DepthRange "1:##"]  Leave the first number as 1 for simplicity; the second can be >= 1.
+;
+; Game-body string such as "1-0" surrounded by blank lines.
+;
+; [GID "..."] or [PID "..."]  Should == the PromptID tag
+; [EID "..."]  should be same as EngineID
+; [Turn "#-w"]  with number if high scores are better, [Turn "#-b"] if lower scores are better.
+; [MovePlayed "...:"] or [TextToken "..."]  must end in colon :, can be empty otherwise.
+; [EngineMove "...:"] or [ModelToken "..."]  should be first-listed token with bext score in table below
+; [Eval "####"]  + sign is optional, should be whole number that is 100x model's top score (rounded)
+; [PrevEval "####"]  MUST be string "n.a." for first turn after PromptID, otherwise = Eval of previous item
+; [NextEval "####"]  = Eval of next item, or "n.a." for last item.
+; [Depth "1"]  (or the number D of numerical columns following the header)
+; [FEN "..."]  or [STEM "..."] with the part of the prompt that increments completions of the text.
+; [NumLegalMoves "###"]  = the number N of rows between the ---- and ==== lines.
+; ([Legal Moves "..."]  Optional: giving space-separated list of tokens avoids a benign error message.)
+;
+; A blank line and then -------------
+; A line with numbers 1 2 3 ... separated by spaces, ending at the value D of the Depth field
+; Another line with single dashes ------------
+; N rows of the form token: score1 score2 ... scoreD  where each score MUST have a decimal point
+; A line of ====================
+; [EndMove]  --- then a blank line and optionally more items
+; ([Comments] is not required, but allows putting arbitrary text between it and [EndMove].)
+
+
+
+[PromptID "Test of Charles Weller quote"]
+[PromptText "Complete successive parts of a sentence given one word at a time: "]
+[EngineID "DeepSeek R1 1.5B"]
+[MultiPV "50"]
+[DepthRange "1:1"]
+
+1-0
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "1-w"]
+[TextToken ",:"]
+[ModelToken "is:"]
+[Eval "+2025"]
+[PrevEval "n.a."]
+[NextEval "+1500"]
+[Depth "1"]
+[STEM "Now"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+,: 20.25
+I: 16.625
+you: 16.5
+the: 16.375
+is: 15.6875
+suppose: 15.25
+that: 15.1875
+consider: 14.75
+we: 14.5625
+: 14.5625
+let: 14.1875
+think: 14.0
+it: 13.9375
+: 13.8125
+imagine: 13.75
+: 13.75
+,: 13.5625
+choose: 13.4375
+.: 13.375
+.: 13.3125
+a: 13.1875
+write: 13.125
+in: 13.0625
+to: 13.0
+...: 13.0
+...: 12.9375
+...: 12.9375
+your: 12.8125
+You: 12.8125
+what: 12.75
+for: 12.75
+:: 12.6875
+,: 12.625
+complete: 12.625
+here: 12.5625
+assume: 12.5
+: 12.4375
+find: 12.4375
+.: 12.4375
+...: 12.3125
+...: 12.0
+,...: 12.0
+(: 12.0
+i: 11.9375
+[: 11.9375
+each: 11.9375
+here: 11.9375
+compute: 11.875
+divide: 11.8125
+$: 11.8125
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "2-w"]
+[TextToken "the:"]
+[ModelToken "the:"]
+[Eval "+1500"]
+[PrevEval "+2025"]
+[NextEval "+1388"]
+[Depth "1"]
+[STEM "Now is"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+the: 15.0
+a: 14.4375
+now: 13.625
+[: 13.375
+(: 12.6875
+: 12.5625
+\: 12.4375
+Now: 12.375
+: 12.1875
+,: 12.0625
+in: 12.0
+my: 11.875
+not: 11.875
+an: 11.75
+...: 11.6875
+...: 11.625
+equal: 11.625
+______: 11.625
+,: 11.5
+N: 11.4375
+at: 11.3125
+{: 11.25
+: 11.1875
+going: 11.1875
+.: 11.1875
+one: 11.1875
+...: 11.125
+is: 11.125
+...: 11.0625
+.: 11.0625
+completed: 11.0
+__: 11.0
+to: 10.9375
+_: 10.9375
+being: 10.9375
+complete: 10.875
+your: 10.875
+:: 10.8125
+...,: 10.75
+$: 10.6875
+ready: 10.625
+: 10.625
+only: 10.625
+n: 10.5625
+': 10.5625
+finishing: 10.5
+____: 10.4375
+that: 10.4375
+completing: 10.375
+no: 10.3125
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "3-w"]
+[TextToken "time:"]
+[ModelToken "time:"]
+[Eval "+1388"]
+[PrevEval "+1500"]
+[NextEval "+1875"]
+[Depth "1"]
+[STEM "Now is the"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+time: 13.875
+same: 12.0625
+current: 12.0625
+completion: 12.0
+complete: 11.875
+best: 11.8125
+answer: 11.625
+correct: 11.625
+first: 11.5
+sentence: 11.5
+[: 11.4375
+only: 11.3125
+beginning: 11.1875
+next: 11.1875
+now: 11.125
+: 11.0625
+way: 10.6875
+present: 10.6875
+most: 10.5625
+start: 10.5625
+Now: 10.5
+(: 10.5
+...: 10.5
+...: 10.4375
+\: 10.375
+______: 10.375
+perfect: 10.3125
+day: 10.1875
+one: 10.1875
+completed: 10.1875
+past: 10.125
+NOW: 10.0625
+part: 10.0
+...: 10.0
+,: 10.0
+case: 9.9375
+*: 9.875
+apple: 9.875
+second: 9.875
+: 9.875
+success: 9.75
+moment: 9.75
+successful: 9.6875
+word: 9.6875
+times: 9.6875
+is: 9.625
+future: 9.625
+final: 9.625
+: 9.5
+work: 9.5
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "4-w"]
+[TextToken "to:"]
+[ModelToken "for:"]
+[Eval "+1875"]
+[PrevEval "+1388"]
+[NextEval "+1513"]
+[Depth "1"]
+[STEM "Now is the time"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+to: 18.75
+for: 16.75
+when: 16.375
+,: 15.625
+...: 15.5
+.: 15.25
+now: 15.25
+of: 15.1875
+.: 15.0
+.: 14.8125
+you: 14.625
+...: 14.5625
+
+...: 14.3125
+I: 14.0625
+(: 14.0
+...: 13.875
+:: 13.875
+we: 13.6875
+that: 13.625
+in: 13.5
+: 12.875
+Now: 12.875
+—: 12.8125
+the: 12.75
+is: 12.6875
+at: 12.5625
+[: 12.5
+where: 12.3125
+....: 12.1875
+[...]: 12.125
+: 12.125
+after: 12.0625
+...: 12.0625
+...: 11.875
+…: 11.875
+a: 11.8125
+and: 11.75
+which: 11.6875
+today: 11.4375
+!: 11.375
+she: 11.3125
+again: 11.25
+—: 11.25
+one: 11.25
+...": 11.25
+only: 11.25
+until: 11.0625
+with: 11.0
+next: 11.0
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "5-w"]
+[TextToken "all:"]
+[ModelToken "the:"]
+[Eval "+1513"]
+[PrevEval "+1875"]
+[NextEval "+1563"]
+[Depth "1"]
+[STEM "Now is the time for"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+the: 15.125
+me: 14.9375
+you: 14.625
+a: 13.875
+now: 13.1875
+us: 12.875
+...: 12.4375
+completion: 12.25
+[: 12.25
+all: 12.25
+...: 11.9375
+success: 11.875
+everyone: 11.8125
+Now: 11.625
+...: 11.4375
+...: 11.4375
+{: 11.375
+your: 11.375
+some: 11.375
+: 11.375
+part: 11.3125
+______: 11.125
+this: 11.0625
+NOW: 11.0
+an: 11.0
+one: 10.9375
+(: 10.8125
+action: 10.8125
+is: 10.8125
+completing: 10.6875
+students: 10.6875
+something: 10.6875
+N: 10.625
+n: 10.5625
+: 10.5625
+each: 10.5
+NO: 10.4375
+...: 10.4375
+,: 10.3125
+finishing: 10.25
+someone: 10.25
+to: 10.25
+": 10.125
+:: 10.125
+my: 10.125
+...: 10.0625
+.: 10.0625
+everything: 10.0
+__: 10.0
+_: 10.0
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "6-w"]
+[TextToken "good:"]
+[ModelToken "the:"]
+[Eval "+1563"]
+[PrevEval "+1513"]
+[NextEval "+1413"]
+[Depth "1"]
+[STEM "Now is the time for all"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+the: 15.625
+of: 14.6875
+to: 14.25
+...: 13.0
+parts: 12.875
+: 12.8125
+you: 12.625
+your: 12.5
+...: 12.25
+things: 11.5625
+components: 11.5625
+that: 11.25
+...: 11.1875
+three: 11.125
+words: 11.125
+students: 11.0
+four: 10.875
+(: 10.875
+great: 10.6875
+children: 10.625
+: 10.5625
+my: 10.5625
+completion: 10.5625
+these: 10.5625
+.: 10.5625
+,: 10.5
+successful: 10.375
+actions: 10.375
+participants: 10.375
+tasks: 10.3125
+groups: 10.3125
+players: 10.3125
+[: 10.3125
+complete: 10.125
+...: 10.0625
+people: 10.0625
+work: 10.0
+.: 10.0
+good: 10.0
+girls: 9.9375
+.: 9.8125
+{: 9.75
+us: 9.75
+sentences: 9.6875
+jobs: 9.6875
+numbers: 9.6875
+women: 9.625
+directions: 9.625
+others: 9.5
+its: 9.5
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "7-w"]
+[TextToken "men:"]
+[ModelToken "things:"]
+[Eval "+1413"]
+[PrevEval "+1563"]
+[NextEval "+1938"]
+[Depth "1"]
+[STEM "Now is the time for all good"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+things: 14.125
+people: 13.6875
+men: 13.625
+to: 12.1875
+...: 11.0625
+: 10.9375
+...: 10.875
+and: 10.875
+friends: 10.8125
+,: 10.75
+boys: 10.5625
+souls: 10.4375
+deeds: 10.375
+women: 10.3125
+guys: 10.0
+girls: 10.0
+ones: 9.9375
+persons: 9.75
+...: 9.375
+companies: 9.3125
+.: 9.3125
+words: 9.0625
+...\: 9.0
+jobs: 9.0
+folks: 8.9375
+\n: 8.9375
+(: 8.9375
+runners: 8.875
+stuff: 8.875
+students: 8.75
+,: 8.75
+thing: 8.6875
+individuals: 8.625
+: 8.625
+singers: 8.5625
+.: 8.5
+nations: 8.3125
+...: 8.25
+weather: 8.25
+or: 8.1875
+results: 8.1875
+...: 8.125
+athletes: 8.125
+players: 8.0625
+in: 8.0625
+soul: 8.0
+: 8.0
+...\: 8.0
+developers: 8.0
+sized: 8.0
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "8-w"]
+[TextToken "to:"]
+[ModelToken "to:"]
+[Eval "+1938"]
+[PrevEval "+1413"]
+[NextEval "+1413"]
+[Depth "1"]
+[STEM "Now is the time for all good men"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+to: 19.375
+.: 15.8125
+,: 15.75
+.: 15.4375
+...: 15.3125
+.: 15.25
+...: 15.1875
+at: 14.6875
+in: 14.625
+...: 14.375
+: 14.0625
+and: 13.9375
+(: 13.75
+...: 13.375
+:: 13.25
+who: 13.1875
+
+of: 12.5
+—: 12.375
+[...]: 12.3125
+: 12.25
+...: 12.125
+,: 12.0625
+…: 12.0
+.\: 11.9375
+...: 11.75
+!: 11.75
+'s: 11.5625
+that: 11.3125
+[: 11.3125
+from: 11.25
+now: 11.125
+\n: 11.125
+To: 11.125
+as: 11.0625
+...,: 11.0
+not: 10.875
+except: 10.75
+...": 10.75
+...\: 10.6875
+.: 10.625
+....: 10.625
+or: 10.625
+living: 10.5625
+alive: 10.5
+but: 10.5
+....: 10.4375
+--: 10.375
+…: 10.375
+/: 10.3125
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "9-w"]
+[TextToken "come:"]
+[ModelToken "come:"]
+[Eval "+1413"]
+[PrevEval "+1938"]
+[NextEval "+1556"]
+[Depth "1"]
+[STEM "Now is the time for all good men to"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+come: 14.125
+be: 13.25
+complete: 12.3125
+...: 12.125
+...: 12.0
+go: 11.8125
+gather: 11.6875
+become: 11.6875
+stop: 11.625
+...: 11.5
+finish: 11.375
+start: 11.0625
+rest: 11.0
+(: 10.9375
+__: 10.875
+meet: 10.8125
+.: 10.6875
+leave: 10.6875
+take: 10.625
+return: 10.5625
+...: 10.5625
+join: 10.5625
+_: 10.5625
+get: 10.5
+begin: 10.4375
+rise: 10.4375
+*: 10.375
+arrive: 10.25
+find: 10.1875
+______: 10.1875
+eat: 10.125
+move: 10.125
+[: 10.0
+now: 9.9375
+make: 9.9375
+...: 9.9375
+...: 9.9375
+turn: 9.9375
+serve: 9.875
+#: 9.8125
+prepare: 9.8125
+…: 9.8125
+have: 9.75
+act: 9.75
+participate: 9.75
+decide: 9.75
+…: 9.75
+: 9.6875
+live: 9.6875
+do: 9.6875
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "10-w"]
+[TextToken "to:"]
+[ModelToken "to:"]
+[Eval "+1556"]
+[PrevEval "+1413"]
+[NextEval "+1238"]
+[Depth "1"]
+[STEM "Now is the time for all good men to come"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+to: 15.5625
+.: 14.0625
+.: 13.625
+,: 13.4375
+.: 13.375
+and: 13.125
+...: 13.0
+together: 12.9375
+:: 12.75
+...: 12.5625
+...: 12.375
+forth: 12.1875
+again: 12.125
+
+!: 11.9375
+up: 11.875
+back: 11.875
+out: 11.875
+forward: 11.8125
+down: 11.5625
+!: 11.4375
+(: 11.375
+—: 11.375
+into: 11.25
+home: 11.125
+/: 11.0625
+[: 11.0625
+: 11.0
+!: 10.9375
+now: 10.75
+in: 10.625
+...: 10.5625
+...: 10.5
+as: 10.5
+.\: 10.4375
+…: 10.4375
+—: 10.375
+...: 10.1875
+....: 10.1875
+alive: 10.0
+for: 9.9375
+\n: 9.875
+—to: 9.875
+with: 9.6875
+–: 9.625
+—and: 9.625
+after: 9.5625
+here: 9.5
+over: 9.5
+upon: 9.4375
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "11-w"]
+[TextToken "the:"]
+[ModelToken "all:"]
+[Eval "+1238"]
+[PrevEval "1556"]
+[NextEval "+1556"]
+[Depth "1"]
+[STEM "Now is the time for all good men to come to"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+all: 12.375
+the: 12.0625
+a: 11.3125
+you: 10.625
+me: 10.375
+[: 9.1875
+your: 9.1875
+this: 9.0625
+us: 9.0625
+each: 9.0625
+...: 8.9375
+one: 8.9375
+him: 8.9375
+: 8.875
+see: 8.75
+earth: 8.375
+his: 8.25
+my: 8.1875
+...: 8.125
+be: 8.0625
+meet: 8.0
+Earth: 7.84375
+bear: 7.78125
+#: 7.75
+justice: 7.6875
+\n: 7.6875
+...: 7.625
+ALL: 7.59375
+...: 7.53125
+...: 7.53125
+(: 7.4375
+an: 7.375
+…: 7.28125
+.: 7.28125
+our: 7.25
+IL: 7.21875
+give: 7.1875
+.: 7.15625
+share: 7.125
+eat: 7.09375
+watch: 7.0625
+their: 7.0625
+.: 7.03125
+...: 7.0
+bat: 7.0
+listen: 6.96875
+take: 6.96875
+:: 6.9375
+visit: 6.90625
+view: 6.8125
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "12-w"]
+[TextToken "aid:"]
+[ModelToken "time:"]
+[Eval "+1556"]
+[PrevEval "+1238"]
+[NextEval "+1800"]
+[Depth "1"]
+[STEM "Now is the time for all good men to come to the"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+time: 15.5625
+all: 14.3125
+...: 13.625
+...: 13.5625
+...: 13.375
+...: 12.125
+...\: 12.125
+...: 11.9375
+: 11.5
+a: 11.1875
+me: 10.875
+date: 10.8125
+job: 10.75
+entire: 10.6875
+.: 10.6875
+...\: 10.625
+...,: 10.625
+place: 10.5625
+.: 10.5
+t: 10.5
+answer: 10.4375
+one: 10.4375
+,: 10.3125
+c: 10.3125
+....: 10.3125
+be: 10.3125
+…: 10.3125
+...,: 10.25
+country: 10.1875
+(: 10.0
+complete: 10.0
+.: 9.9375
+…: 9.9375
+global: 9.875
+....: 9.75
+the: 9.75
+new: 9.75
+same: 9.75
+completion: 9.75
+earth: 9.75
+school: 9.625
+...": 9.625
+top: 9.5625
+point: 9.5625
+you: 9.5
+now: 9.5
+home: 9.5
+first: 9.4375
+: 9.4375
+aid: 9.40
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "13-w"]
+[TextToken "of:"]
+[ModelToken "of:"]
+[Eval "+1800"]
+[PrevEval "+1556"]
+[NextEval "+1550"]
+[Depth "1"]
+[STEM "Now is the time for all good men to come to the aid"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+of: 18.0
+.: 18.0
+.: 17.375
+.: 17.125
+,: 16.875
+in: 15.375
+...: 15.25
+: 15.125
+...: 14.8125
+...: 14.8125
+
+,: 14.3125
+:: 14.25
+now: 13.75
+!: 13.4375
+.": 13.25
+: 13.1875
+and: 13.0
+to: 12.9375
+—: 12.8125
+...: 12.8125
+the: 12.75
+(: 12.75
+for: 12.75
+.": 12.75
+!: 12.625
+by: 12.5
+if: 12.5
+!: 12.4375
+one: 12.4375
+...: 12.375
+...: 12.3125
+?: 12.25
+a: 12.25
+?: 12.25
+as: 12.1875
+.\: 12.125
+.": 11.9375
+once: 11.9375
+,: 11.875
+…: 11.875
+from: 11.75
+is: 11.75
+[: 11.6875
+you: 11.625
+?: 11.5625
+us: 11.375
+[...]: 11.375
+,...: 11.375
+at: 11.375
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "14-w"]
+[TextToken "their:"]
+[ModelToken "all:"]
+[Eval "+1550"]
+[PrevEval "+1800"]
+[NextEval "+994"]
+[Depth "1"]
+[STEM "Now is the time for all good men to come to the aid of"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+all: 15.5
+the: 15.4375
+a: 13.125
+me: 12.1875
+: 11.8125
+...: 11.625
+one: 11.4375
+this: 11.375
+you: 11.25
+your: 11.0625
+...: 10.9375
+...: 10.8125
+their: 10.5625
+[: 10.4375
+my: 10.375
+...: 10.375
+our: 10.1875
+his: 10.125
+those: 9.875
+...: 9.8125
+us: 9.75
+...: 9.5625
+each: 9.125
+others: 9.0
+humanity: 8.9375
+,: 8.8125
+these: 8.75
+men: 8.75
+[...]: 8.6875
+...\: 8.625
+an: 8.625
+: 8.5625
+: 8.5625
+.: 8.5
+him: 8.4375
+,: 8.4375
+everyone: 8.375
+....: 8.3125
+that: 8.1875
+...": 8.125
+/: 8.0625
+(: 8.0625
+…: 7.96875
+none: 7.96875
+every: 7.875
+\n: 7.875
+...\: 7.84375
+…: 7.8125
+now: 7.75
+nations: 7.71875
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "15-w"]
+[TextToken "country:"]
+[ModelToken "loved:"]
+[Eval "+994"]
+[PrevEval "+1550"]
+[NextEval "+1750"]
+[Depth "1"]
+[STEM "Now is the time for all good men to come to the aid of their"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+loved: 9.9375
+friends: 9.8125
+neighbors: 9.6875
+: 9.3125
+country: 9.125
+parents: 9.125
+own: 8.9375
+father: 8.75
+fellow: 8.75
+...: 8.75
+...: 8.6875
+neighbor: 8.5
+...: 8.3125
+beloved: 8.125
+little: 8.125
+children: 8.0625
+dear: 8.0
+friend: 7.8125
+communities: 7.65625
+Lord: 7.53125
+mother: 7.4375
+family: 7.34375
+…: 7.34375
+de: 7.28125
+families: 7.25
+[: 7.1875
+...: 7.15625
+wives: 7.09375
+sacred: 7.09375
+...: 7.0625
+brothers: 7.0625
+respective: 7.0625
+.: 7.03125
+community: 6.96875
+people: 6.90625
+...: 6.65625
+(: 6.5625
+...\: 6.5
+true: 6.46875
+______: 6.40625
+sick: 6.375
+enemies: 6.3125
+deficient: 6.3125
+spiritual: 6.25
+counterparts: 6.21875
+old: 6.15625
+...(: 6.0625
+departed: 6.0625
+brother: 6.03125
+…: 6.03125
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "16-w"]
+[TextToken ".:"]
+[ModelToken ".:"]
+[Eval "+1750"]
+[PrevEval "+994"]
+[NextEval "+1294"]
+[Depth "1"]
+[STEM "Now is the time for all good men to come to the aid of their country"]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+.: 17.5
+.: 17.25
+.: 17.25
+,: 16.75
+
+:: 14.5625
+and: 14.0625
+?: 14.0
+: 14.0
+...: 13.875
+in: 13.4375
+—: 13.375
+when: 13.3125
+'s: 13.25
+!: 13.0625
+,: 13.0625
+now: 13.0
+.\: 12.875
+men: 12.6875
+by: 12.5625
+?: 12.5625
+: 12.5
+...: 12.4375
+?: 12.4375
+...: 12.375
+(: 12.1875
+if: 12.1875
+...: 12.125
+.": 12.0625
+...: 11.9375
+!: 11.8125
+or: 11.75
+at: 11.75
+
+to: 11.6875
+
+as: 11.625
+...: 11.375
+!: 11.375
+.": 11.3125
+once: 11.3125
+—or: 11.25
+after: 11.25
+.": 11.1875
+.: 11.1875
+—: 11.0
+,: 10.9375
+…: 10.875
+with: 10.875
+of: 10.875
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
+[PID "Test of Charles Weller quote"]
+[EID "DeepSeek R1 1.5B"]
+[Turn "17-w"]
+[TextToken ":"]
+[ModelToken ".:"]
+[Eval "+1294"]
+[PrevEval "+1750"]
+[NextEval "n.a."]
+[Depth "1"]
+[STEM "Now is the time for all good men to come to the aid of their country ."]
+[NumLegalMoves "50"]
+
+---------------
+            1
+---------------
+.: 12.9375
+Now: 12.625
+(: 11.6875
+The: 11.4375
+Please: 11.1875
+If: 10.625
+I: 10.5625
+But: 10.5
+So: 10.5
+: 10.4375
+: 9.875
+In: 9.8125
+You: 9.75
+This: 9.75
+: 9.75
+For: 9.6875
+Each: 9.625
+When: 9.5
+To: 9.5
+[: 9.5
+She: 9.4375
+We: 9.4375
+It: 9.25
+Only: 9.1875
+...: 9.1875
+Let: 9.125
+By: 9.125
+One: 9.0625
+Is: 9.0625
+No: 9.0625
+Answer: 9.0
+A: 9.0
+—: 8.9375
+": 8.9375
+Then: 8.875
+There: 8.8125
+He: 8.75
+Well: 8.6875
+Wait: 8.625
+\: 8.625
+…: 8.625
+Do: 8.5625
+: 8.5625
+Okay: 8.5625
+On: 8.5
+And: 8.5
+-: 8.4375
+Here: 8.375
+What: 8.375
+Can: 8.375
+===========================================================================================================
+
+[Comments]
+[EndMove]
+
+
